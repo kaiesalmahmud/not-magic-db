@@ -1,5 +1,12 @@
-from dict_values import *
+from utils import *
 
-password = open('adiq_db_pass.txt', 'r').read().strip()
+result = getDatabaseExampleResponses()
 
-print(password)
+sample = f"""
+The following json details about the table:
+
+{result}
+
+"""
+
+print(sample)
