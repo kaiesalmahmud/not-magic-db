@@ -12,7 +12,7 @@ adiq_db_creds = {
 #############################
 
 Databases = {
-    "input": "",
+    # "input": "",
     "databases": [
         {
             "name": "adiq", 
@@ -22,9 +22,9 @@ Databases = {
 }
 
 Tables = {
-    "input": {
-        "database_name" : "adiq"
-    },
+    # "input": {
+    #     "database_name" : "adiq"
+    # },
     "tables": [
         {
             "name": "dailyLog",
@@ -34,10 +34,10 @@ Tables = {
 }
 
 TableDetails = {
-    "input": {
-        "database_name": "adiq",
-        "table_name": "dailyLog"
-    },
+    # "input": {
+    #     "database_name": "adiq",
+    #     "table_name": "dailyLog"
+    # },
     "columns": [
         {
             "name": "zone_name",
@@ -110,11 +110,11 @@ TableDetails = {
     ]
 }
 
-TableRowSampes = {
-    "input": {
-        "database_name": "adiq",
-        "table_name": "dailyLog"
-    },
+TableRowSamples = {
+    # "input": {
+    #     "database_name": "adiq",
+    #     "table_name": "dailyLog"
+    # },
     "sample_rows": [
         "| T | OFFICE | OFT-001 | AD-IQ HQ | 400 | 2023-10-15 | 2023-10-15 12:00:09.986000+06:00 | 2023-10-15 23:59:51.989000+06:00 | 43190.014000 | 720 | 11:59:50 | 1.1997226111111111 | 0.014000 | 00:00:00 | 0 | 00:00:00 | OPENED |",
         "| B | Mohanagor | MNG-001 | Hasib store | 401 | 2023-10-15 | 2023-10-15 09:22:59.988000+06:00 | 2023-10-15 22:04:46.986000+06:00 | 45784.018000 | 763 | 12:43:04 | 1.2717782777777778 | 127.018000 | 00:02:07 | 0 | 00:00:00 | OPENED |",
@@ -125,42 +125,53 @@ TableRowSampes = {
 }
 
 DatabaseExampleResponses = {
-    "input": {
-        "database_name": "adiq"
-    },
+    # "input": {
+    #     "database_name": "adiq"
+    # },
     "examples": [
         {
-            "query": "What are the names of the zones?",
-            "response": "SELECT DISTINCT \"zone_name\"\nFROM \"dailyLog\"\nORDER BY \"zone_name\""
+            "question": "What are the names of the zones?",
+            "sql_query": "SELECT DISTINCT \"zone_name\"\nFROM \"dailyLog\"\nORDER BY \"zone_name\""
         },
         {
-            "query": "What is the number of retail points and total play time in minutes for each zone?",
-            "response": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\"), SUM(total_playtime_minutes)\nFROM \"dailyLog\"\nGROUP BY \"zone_name\""
+            "question": "What is the number of retail points and total play time in minutes for each zone?",
+            "sql_query": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\"), SUM(total_playtime_minutes)\nFROM \"dailyLog\"\nGROUP BY \"zone_name\""
         },
         {
-            "query": "How many shops achieved satisfactory efficiency on 15th October?",
-            "response": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\"), SUM(total_playtime_minutes) \nFROM \"dailyLog\" \nWHERE \"Efficiency\" >= 1 AND \"Date\" = '2023-10-15'\nGROUP BY \"zone_name\""
+            "question": "How many shops achieved satisfactory efficiency on 15th October?",
+            "sql_query": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\"), SUM(total_playtime_minutes) \nFROM \"dailyLog\" \nWHERE \"Efficiency\" >= 1 AND \"Date\" = '2023-10-15'\nGROUP BY \"zone_name\""
         },
         {
-            "query": "How many shops were not opened on 15th October?",
-            "response": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\")\nFROM \"dailyLog\" \nWHERE \"Opened\" = 'NOT-OPENED' AND \"Date\" = '2023-10-15'\nGROUP BY \"zone_name\""
+            "question": "How many shops were not opened on 15th October?",
+            "sql_query": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\")\nFROM \"dailyLog\" \nWHERE \"Opened\" = 'NOT-OPENED' AND \"Date\" = '2023-10-15'\nGROUP BY \"zone_name\""
         },
         {
-            "query": "List of names of the shops that were not opened on 15th October?",
-            "response": "SELECT \"zone_name\", \"point_code\", \"point_name\"\nFROM \"dailyLog\" \nWHERE \"Opened\" = 'NOT-OPENED' AND \"Date\" = '2023-10-15'"
+            "question": "List of names of the shops that were not opened on 15th October?",
+            "sql_query": "SELECT \"zone_name\", \"point_code\", \"point_name\"\nFROM \"dailyLog\" \nWHERE \"Opened\" = 'NOT-OPENED' AND \"Date\" = '2023-10-15'"
         },
         {
-            "query": "What is the number and total playtime for under-performing shops on 15th October?",
-            "response": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\"), SUM(total_playtime_minutes) \nFROM \"dailyLog\" \nWHERE \"Efficiency\" < 1 AND \"Date\" = '2023-10-15'\nGROUP BY \"zone_name\""
+            "question": "What is the number and total playtime for under-performing shops on 15th October?",
+            "sql_query": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\"), SUM(total_playtime_minutes) \nFROM \"dailyLog\" \nWHERE \"Efficiency\" < 1 AND \"Date\" = '2023-10-15'\nGROUP BY \"zone_name\""
         }
     ]
 }
 
 DatabaseSpecialInstructions = {
-    "input": {
-        "database_name": "adiq"
-    },
+    # "input": {
+    #     "database_name": "adiq"
+    # },
     "instructions": [
         ""
     ]
 }
+
+TableSpecialInstructions = {
+    # "input": {
+    #     "database_name": "adiq",
+    #     "table_name": "dailyLog"
+    # },
+    "instructions": [
+        ""
+    ]
+}
+
