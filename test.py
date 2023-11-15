@@ -2,11 +2,12 @@ from utils import *
 
 result = getDatabaseExampleResponses()
 
-sample = f"""
-The following json details about the table:
+# sample = f"""
+# The following json details about the table:
 
-{result}
+# {result}
 
-"""
+# """
 
-print(sample)
+# print(sample)
+print(result)
