@@ -33,5 +33,7 @@ def getDatabaseExampleResponses():
     return result
 
 def getDatabaseSpecialInstructions():
-    result = returnDatabaseSpecialInstruction()
+    # result = returnDatabaseSpecialInstruction()
+    result = DatabaseSpecialInstructions
+    result = json.dumps(result)
     return result

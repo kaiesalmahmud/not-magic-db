@@ -16,7 +16,7 @@ Databases = {
     "databases": [
         {
             "name": "adiq", 
-            "description": "This database contains information about the daily log of retail points or shops in a particular area. A number of areas form a zone."
+            "description": "This database contains information about tv screens on retail points or shops."
         }
     ]
 }
@@ -131,27 +131,75 @@ DatabaseExampleResponses = {
     "examples": [
         {
             "question": "What are the names of the zones?",
-            "sql_query": "SELECT DISTINCT \"zone_name\"\nFROM \"dailyLog\"\nORDER BY \"zone_name\""
+            "sql_query": """
+                    What are the names of the zones? 
+                    Query:
+                    SELECT DISTINCT "zone_name"
+                    FROM "dailyLog"
+                    ORDER BY "zone_name"
+            """
         },
         {
             "question": "What is the number of retail points and total play time in minutes for each zone?",
-            "sql_query": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\"), SUM(total_playtime_minutes)\nFROM \"dailyLog\"\nGROUP BY \"zone_name\""
+            "sql_query": """
+                    SELECT "zone_name", COUNT(DISTINCT "point_code"), SUM(total_playtime_minutes)
+                    FROM "dailyLog"
+                    GROUP BY "zone_name"
+            """
         },
         {
             "question": "How many shops achieved satisfactory efficiency on 15th October?",
-            "sql_query": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\"), SUM(total_playtime_minutes) \nFROM \"dailyLog\" \nWHERE \"Efficiency\" >= 1 AND \"Date\" = '2023-10-15'\nGROUP BY \"zone_name\""
+            "sql_query": """
+                    SELECT "zone_name", COUNT(DISTINCT "point_code"), SUM(total_playtime_minutes) 
+                    FROM "dailyLog" 
+                    WHERE "Efficiency" >= 1 AND "Date" = '2023-10-15'
+                    GROUP BY "zone_name"
+            """
         },
         {
             "question": "How many shops were not opened on 15th October?",
-            "sql_query": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\")\nFROM \"dailyLog\" \nWHERE \"Opened\" = 'NOT-OPENED' AND \"Date\" = '2023-10-15'\nGROUP BY \"zone_name\""
+            "sql_query": """
+                    SELECT "zone_name", COUNT(DISTINCT "point_code")
+                    FROM "dailyLog" 
+                    WHERE "Opened" = 'NOT-OPENED' AND "Date" = '2023-10-15'
+                    GROUP BY "zone_name"
+            """
         },
         {
             "question": "List of names of the shops that were not opened on 15th October?",
-            "sql_query": "SELECT \"zone_name\", \"point_code\", \"point_name\"\nFROM \"dailyLog\" \nWHERE \"Opened\" = 'NOT-OPENED' AND \"Date\" = '2023-10-15'"
+            "sql_query": """
+                    SELECT "zone_name", "point_code", "point_name"
+                    FROM "dailyLog" 
+                    WHERE "Opened" = 'NOT-OPENED' AND "Date" = '2023-10-15'
+            """
         },
         {
             "question": "What is the number and total playtime for under-performing shops on 15th October?",
-            "sql_query": "SELECT \"zone_name\", COUNT(DISTINCT \"point_code\"), SUM(total_playtime_minutes) \nFROM \"dailyLog\" \nWHERE \"Efficiency\" < 1 AND \"Date\" = '2023-10-15'\nGROUP BY \"zone_name\""
+            "sql_query": """
+                    SELECT "zone_name", COUNT(DISTINCT "point_code"), SUM(total_playtime_minutes) 
+                    FROM "dailyLog" 
+                    WHERE "Opened" = 'OPENED' AND "Efficiency" < 1 AND "Date" = '2023-10-15'
+                    GROUP BY "zone_name"
+            """
+        },
+        {
+            "question": "How many shops opend after 10 AM but before 11 AM on 15th October?",
+            "sql_query": """
+                    SELECT "zone_name", COUNT(DISTINCT "point_code") 
+                    FROM "dailyLog" 
+                    WHERE EXTRACT(HOUR FROM "Started") >= 10 AND EXTRACT(HOUR FROM "Started") < 11 AND "Date" = '2023-10-15'
+                    GROUP BY "zone_name"
+            """
+        },
+        {
+            "question": "Which shop had the highest efficiency on 15th October?",
+            "sql_query": """
+                    SELECT "point_name", MAX("Efficiency")
+                    FROM "dailyLog"
+                    WHERE "Date" = '2023-10-15' AND "Efficiency" IS NOT NULL
+                    GROUP BY "point_name"
+                    ORDER BY MAX("Efficiency") DESC
+            """
         }
     ]
 }
@@ -161,7 +209,7 @@ DatabaseSpecialInstructions = {
     #     "database_name": "adiq"
     # },
     "instructions": [
-        ""
+        "When ordering in descending order ignore the NULL values.",
     ]
 }
 
